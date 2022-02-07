@@ -1,20 +1,19 @@
-import logo from "./logo.svg";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import styled from "styled-components";
 import {
   Home,
   Error,
   Register,
   Login,
-  ProtectedRoute,
   ForgotPassword,
   ResetPassword,
 } from "./pages";
-
+import Navbar from "./components/Navbar";
 import { useGlobalContext } from "./context";
-
+import bgimage from "./img/jpop.43bfb92.jpg";
 function App() {
   const { isLoading } = useGlobalContext();
-  if (isLoading) {
+  if (0) {
     return (
       <section className="page page-center">
         <div className="loading"></div>
@@ -22,33 +21,27 @@ function App() {
     );
   }
   return (
-    <Router>
-      <Navbar />
-      <Switch>
-        <Route path="/" exact>
-          <Home />
-        </Route>
-        <Route path="/login" exact>
-          <Login />
-        </Route>
-        <Route path="/register" exact>
-          <Register />
-        </Route>
-        <ProtectedRoute path="/dashboard" exact>
-          <Dashboard />
-        </ProtectedRoute>
-        <Route path="/forgot-password" exact>
-          <ForgotPassword />
-        </Route>
-        <Route path="/user/reset-password" exact>
-          <ResetPassword />
-        </Route>
-        <Route path="*">
-          <Error />
-        </Route>
-      </Switch>
-    </Router>
+    <Wrapper>
+      <Router>
+        <img src={bgimage} alt="listen" className="background" />
+        <Navbar />
+        <Routes>
+          <Route path="/" exact={true} element={<Home />} />
+          <Route path="*" element={<Error />} />
+        </Routes>
+      </Router>
+    </Wrapper>
   );
 }
 
+const Wrapper = styled.div`
+  .background {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    z-index: -1;
+  }
+`;
 export default App;
