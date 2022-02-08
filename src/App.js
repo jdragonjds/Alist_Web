@@ -37,6 +37,8 @@ function App() {
             exact={true}
             element={<ResetPassword />}
           />
+          <Route path="/register" exact={true} element={<Register />} />
+          <Route path="/login" exact={true} element={<Login />} />
           <Route path="*" element={<Error />} />
         </Routes>
       </Router>
