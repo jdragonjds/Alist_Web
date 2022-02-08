@@ -32,6 +32,11 @@ function App() {
             exact={true}
             element={<ForgotPassword />}
           />
+          <Route
+            path="/reset-password"
+            exact={true}
+            element={<ResetPassword />}
+          />
           <Route path="*" element={<Error />} />
         </Routes>
       </Router>
