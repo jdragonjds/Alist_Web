@@ -31,11 +31,11 @@ function Home() {
             tracking.
           </p>
           <div className="btn-container">
-            <Link to="/login" className="btn">
-              Login
-            </Link>
             <Link to="/register" className="btn">
-              Register
+              Sign Up
+            </Link>
+            <Link to="/forgot-password" className="btn">
+              Forgot Password
             </Link>
           </div>
         </div>
