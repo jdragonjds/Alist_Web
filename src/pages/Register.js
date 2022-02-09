@@ -1,12 +1,14 @@
-//import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../axios";
 import styled from "styled-components";
 import React, { useState } from "react";
 import useLocalState from "../utils/localState";
 import logo from "../img/ALIST-logos_transparent.png";
+import { useGlobalContext } from "../context";
 
 function Register() {
+  let navigate = useNavigate();
   const [values, setValues] = useState({
     name: "",
     email: "",
@@ -21,6 +23,7 @@ function Register() {
     setSuccess,
     hideAlert,
   } = useLocalState();
+  const { user, saveUser, logoutUser } = useGlobalContext();
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
@@ -36,11 +39,18 @@ function Register() {
       return;
     }
     try {
+      logoutUser();
       const { data } = await axios.post("/auth/register", {
         ...values,
       });
       showAlert({ text: data.msg, type: "success" });
       setSuccess(true);
+      saveUser(data.user.name);
+      localStorage.setItem(
+        "user",
+        JSON.stringify({ name: data.user.name, token: data.token })
+      );
+      navigate("/dashboard");
     } catch (error) {
       showAlert({
         text: "Something went wrong, please try again",
@@ -52,6 +62,7 @@ function Register() {
   return (
     <>
       <Wrapper className="page">
+        {user && navigate("/dashboard")}
         <div className="cover-card">
           <img src={logo} alt="alist" className="logo" />
           {alert.show && <div className={`${alert.type}`}>{alert.text}</div>}

@@ -34,8 +34,8 @@ function Home() {
             <Link to="/register" className="btn">
               Sign Up
             </Link>
-            <Link to="/forgot-password" className="btn">
-              Forgot Password
+            <Link to="/login" className="btn">
+              Sign in
             </Link>
           </div>
         </div>

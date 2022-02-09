@@ -14,7 +14,7 @@ const Navbar = () => {
         </Link>
         {user && (
           <div className="nav-links">
-            <p>hello, {user.name}</p>
+            <p className="form-label">hello, {user}</p>
             <button
               className="btn btn-small"
               onClick={() => {
@@ -32,6 +32,7 @@ const Navbar = () => {
 
 const Wrapper = styled.nav`
   height: 6rem;
+  font-family: "Inconsolata", monospace;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -42,6 +43,15 @@ const Wrapper = styled.nav`
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
+  }
+  .form-label {
+    display: block;
+    font-size: 1rem;
+    margin-top: 12px;
+    text-align: center;
+    text-transform: capitalize;
+    letter-spacing: var(--letterSpacing);
+    color: white;
   }
   .nav-links {
     display: flex;
@@ -58,6 +68,29 @@ const Wrapper = styled.nav`
   }
   .logo {
     max-width: 200px;
+  }
+  .btn {
+    text-align: center;
+    box-sizing: inherit;
+    font-family: "Roboto", "Open Sans", sans-serif;
+    font-weight: 20px;
+    display: inline-block;
+    vertical-align: middle;
+    border: 1px solid transparent;
+    padding: 0.7rem 1rem;
+    border-color: #f8f9fa;
+    cursor: pointer;
+    text-decoration: none;
+    color: white;
+    margin-bottom: 5px;
+    width: 60px;
+    height: 25px;
+    border-radius: 8px;
+    background: none;
+  }
+  .btn:hover {
+    color: black;
+    background: white;
   }
   @media (min-width: 776px) {
     .nav-links {

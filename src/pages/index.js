@@ -5,6 +5,7 @@ import Login from "./Login";
 import ProtectedRoute from "./ProtectedRoute";
 import ForgotPassword from "./ForgotPassword";
 import ResetPassword from "./ResetPassword";
+import Dashboard from "./Dashboard";
 export {
   Home,
   Error,
@@ -13,4 +14,5 @@ export {
   ProtectedRoute,
   ForgotPassword,
   ResetPassword,
+  Dashboard,
 };
