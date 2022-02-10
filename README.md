@@ -2,4 +2,5 @@
 
 This project helps u to find ur anime saved by the chrome extension
 
- ![](./Alist web 1.PNG) ![](./Alist web.PNG)
+ ![bruh](./Alist web.PNG)
+ ![login](./Alist web 1.PNG)
