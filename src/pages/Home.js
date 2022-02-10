@@ -55,11 +55,13 @@ const Wrapper = styled.div`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -30%);
-    max-width: 600px;
+    width: 100vw;
+    max-width: 500px;
     max-height: 600px;
     padding: 1.25rem;
     text-align: center;
-    display: grid;
+    display: flex;
+    flex-direction: column;
     align-content: space-around;
     justify-items: center;
   }
@@ -75,18 +77,17 @@ const Wrapper = styled.div`
     font-size: 1.3rem;
   }
   .moe {
-    position: absolute;
-    transform: translate(170%, -77%);
+    position: inherit;
+    transform: translateY(-77%);
     width: 130px;
     height: 200px;
+    right: 0;
     z-index: 2;
   }
   .btn-container {
-    display: grid;
-    grid-template-columns: auto auto;
-    grid-gap: 40px;
+    display: flex;
+    flex-direction: row;
     justify-content: space-around;
-    align-content: center;
   }
   .btn {
     text-align: center;
@@ -102,11 +103,16 @@ const Wrapper = styled.div`
     text-decoration: none;
     color: white;
     margin-bottom: 5px;
-    width: 140px;
+    width: 100px;
   }
   .btn:hover {
     color: black;
     background: white;
+  }
+  @media only screen and (max-width: 350px) {
+    .moe {
+      display: none;
+    }
   }
 `;
 

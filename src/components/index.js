@@ -1,3 +1,6 @@
-import AnimeTile from "./AnimeTile";
+import Alist from "./Alist";
 import Navbar from "./Navbar";
-export { AnimeTile, Navbar };
+import TabBar from "./TabBar";
+import Explore from "./Explore";
+import Friends from "./Friends";
+export { Alist, Navbar, TabBar, Explore, Friends };
