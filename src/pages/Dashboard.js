@@ -17,14 +17,13 @@ const Dashboard = () => {
   const { alert, showAlert, loading, setLoading, success, setSuccess } =
     useLocalState();
 
-  let tab = useQuery().get("tab");
-  if (!tab) tab = "alist";
+  const tab = useQuery().get("tab");
 
   return (
     <>
       <Wrapper className="page">
         <TabBar />
-        {tab === "alist" && <Alist />}
+        {(tab === "alist" || !tab) && <Alist />}
         {tab === "friends" && <Friends />}
         {tab === "explore" && <Explore />}
       </Wrapper>
@@ -33,7 +32,8 @@ const Dashboard = () => {
 };
 
 const Wrapper = styled.div`
-  width: 90vw;
+  margin: 0;
+  justify-content: center;
   .bottombar {
     height: 30px;
   }

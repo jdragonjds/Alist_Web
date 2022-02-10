@@ -49,6 +49,7 @@ function App() {
 }
 
 const Wrapper = styled.div`
+  margin: 0;
   .background {
     position: fixed;
     right: 0;
