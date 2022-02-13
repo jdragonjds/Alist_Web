@@ -19,15 +19,11 @@ const Friends = () => {
       <div className="row">
         <div class="side">
           <ul class="tabs">
-            <li onClick={handleSide} name="requests">
-              requests
-            </li>
+            <li onClick={handleSide}>requests</li>
             <li> / </li>
-            <li onClick={handleSide} name="friends">
-              friends
-            </li>
+            <li onClick={handleSide}>friends</li>
           </ul>
-          {sideTab === "request" && <AllRequests />}
+          {sideTab === "requests" && <AllRequests />}
           {sideTab === "friends" && <AllFriends />}
         </div>
         <div class="main">
@@ -63,7 +59,6 @@ const Wrapper = styled.div`
   }
   font-family: "Inconsolata", monospace;
   .tabs {
-    height: 40px;
     overflow: hidden;
     display: flex;
     flex-direction: row;

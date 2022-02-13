@@ -1,21 +1,36 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Navigate } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../../axios";
+import acceptRequest from "./acceptRequest";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 
 const AllRequests = () => {
-  const getAllFriends = async () => {
+  const [requests, setRequests] = useState([]);
+  const getAllRequests = async () => {
     const { data } = await axios.get("/friend/request");
-    return data;
+    setRequests(data);
+    console.log("rerender");
   };
-  const requests = getAllFriends();
+  useEffect(() => {
+    getAllRequests();
+  }, []);
   return (
     <Wrapper>
-      <ul className="tabs">
+      <ul className="tabs-req">
         {requests.map((request) => {
-          return <li requestId={request.id}>{request.name}</li>;
+          return (
+            <div requestid={request.id}>
+              {request.name}
+              <FontAwesomeIcon
+                icon={faCheckCircle}
+                onClick={() => acceptRequest(request.id)}
+              />
+            </div>
+          );
         })}
       </ul>
     </Wrapper>
@@ -23,19 +38,26 @@ const AllRequests = () => {
 };
 const Wrapper = styled.div`
   margin-top: 1rem;
-  .tabs {
-    height: 40px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    flex-wrap: wrap;
-    flex-gap: 20px;
+  .tabs-req { 
+    display: grid;
+    grid-direction: column;  
+    grid-gap: 5px;
     list-style-type: none;
     color: white;
-    li {
-      font-size: 20px;
-      margin: 5px;
+    overflow:hidden; 
+    overflow-y:scroll;
+    height:700px;
+    div { 
+      font-size: 25px; 
+      height:50px;
+      box-sizing: border-box; 
+      padding-top:10px;
+    }
+    div:nth-child(odd) {
+      background: rgba(255, 99, 71, 0.2);
+    }
+    div:nth-child(even) {
+      rgba(255, 99, 71, 0.3)
     }
   }
 `;

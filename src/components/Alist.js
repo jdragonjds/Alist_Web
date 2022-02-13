@@ -36,6 +36,7 @@ const Alist = () => {
   useEffect(() => {
     getList();
   }, []);
+
   return (
     <Wrapper>
       <div className="animeContainer">
