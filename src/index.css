@@ -55,4 +55,23 @@
     0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
- 
+ /* scroll bar*/
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgba(93, 12, 100, 0.404);
+  border-radius: 20px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(184, 106, 5, 0.562);
+}
