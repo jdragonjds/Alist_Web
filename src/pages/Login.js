@@ -28,6 +28,7 @@ function Login() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    logoutUser();
     setLoading(true);
     hideAlert();
     if (!values.email || !values.password) {
@@ -38,11 +39,10 @@ function Login() {
       return;
     }
     try {
-      logoutUser();
       const { data } = await axios.post("/auth/login", {
         ...values,
       });
-      showAlert({ text: data.msg, type: "success" });
+      showAlert({ text: `Welcome, ${data.user.name}`, type: "success" });
       setSuccess(true);
       saveUser(data.user.name);
       console.log("login in success");
@@ -54,7 +54,7 @@ function Login() {
     } catch (error) {
       console.log("login error");
       showAlert({
-        text: error.msg,
+        text: error.response.data.msg,
       });
       setSuccess(true);
     }

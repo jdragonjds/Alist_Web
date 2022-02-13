@@ -29,17 +29,17 @@ function Register() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    logoutUser();
     setLoading(true);
     hideAlert();
     if (!values.email || !values.password || !values.name) {
       showAlert({
-        text: "Please provide email",
+        text: "Please provide proper values",
       });
       setLoading(false);
       return;
     }
     try {
-      logoutUser();
       const { data } = await axios.post("/auth/register", {
         ...values,
       });
@@ -50,12 +50,14 @@ function Register() {
         "user",
         JSON.stringify({ name: data.user.name, token: data.token })
       );
-      navigate("/dashboard");
     } catch (error) {
       showAlert({
-        text: "Something went wrong, please try again",
+        text: error.response.data.msg || "there was an error",
       });
       setSuccess(true);
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
     }
     setLoading(false);
   };
@@ -72,7 +74,7 @@ function Register() {
               <h4>Register</h4>
               <div className="form-row">
                 <input
-                  type="text"
+                  type="name"
                   name="name"
                   placeholder="Username"
                   className="form-input name-input"
