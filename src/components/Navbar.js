@@ -14,7 +14,10 @@ const Navbar = () => {
         </Link>
         {user && (
           <div className="nav-links">
-            <p className="form-label">hello, {user}</p>
+            <div className="form-label">
+              hello,
+              <Link to="/usertab">{user}</Link>
+            </div>
             <button
               className="btn btn-small"
               onClick={() => {
@@ -45,22 +48,24 @@ const Wrapper = styled.nav`
     flex-wrap: wrap;
   }
   .form-label {
-    display: block;
+    display: flex;
+    flex-direction: row;
     font-size: 1rem;
-    margin-top: 12px;
     text-align: center;
+    margin-right: 10px;
     text-transform: capitalize;
     letter-spacing: var(--letterSpacing);
     color: white;
+    a {
+      text-decoration: none;
+      color: white;
+    }
   }
+
   .nav-links {
     display: flex;
-    flex-direction: column;
-  }
-  .nav-links p {
-    margin: 0;
-    text-transform: capitalize;
-    margin-bottom: 0.25rem;
+    flex-direction: row;
+    align-items: center;
   }
   .home-link {
     display: flex;
@@ -93,14 +98,6 @@ const Wrapper = styled.nav`
     background: white;
   }
   @media (min-width: 776px) {
-    .nav-links {
-      flex-direction: row;
-      align-items: center;
-    }
-    .nav-links p {
-      margin: 0;
-      margin-right: 1.5rem;
-    }
   } ;
 `;
 

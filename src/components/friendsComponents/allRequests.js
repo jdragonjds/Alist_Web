@@ -4,9 +4,9 @@ import { Navigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../../axios";
-import acceptRequest from "./acceptRequest";
+import { acceptRequest, cancelRequest } from "./handleRequest";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle, faXmark } from "@fortawesome/free-solid-svg-icons";
 
 const AllRequests = () => {
   const [requests, setRequests] = useState([]);
@@ -23,12 +23,18 @@ const AllRequests = () => {
       <ul className="tabs-req">
         {requests.map((request) => {
           return (
-            <div requestid={request.id}>
+            <div requestid={request.id} className="item">
               {request.name}
-              <FontAwesomeIcon
-                icon={faCheckCircle}
-                onClick={() => acceptRequest(request.id)}
-              />
+              <span className="space">
+                <FontAwesomeIcon
+                  icon={faCheckCircle}
+                  onClick={() => acceptRequest(request.id)}
+                />
+                <FontAwesomeIcon
+                  icon={faXmark}
+                  onClick={() => cancelRequest(request.id)}
+                />
+              </span>
             </div>
           );
         })}
@@ -49,9 +55,12 @@ const Wrapper = styled.div`
     height:700px;
     div { 
       font-size: 25px; 
-      height:50px;
+      height:50px; 
       box-sizing: border-box; 
-      padding-top:10px;
+      display:grid; 
+      grid-template-columns:auto auto;
+      justify-content:space-between;
+      padding-top:11px; 
     }
     div:nth-child(odd) {
       background: rgba(255, 99, 71, 0.2);
@@ -59,6 +68,18 @@ const Wrapper = styled.div`
     div:nth-child(even) {
       rgba(255, 99, 71, 0.3)
     }
+  }
+  .item{
+    display:flex;
+    flex-wrap:wrap;
+    flex-direction:row;
+    justify-content:space-between;
+    padding:10px; 
+  }
+  .space{
+    display:grid;
+    grid-gap:10px;
+    grid-template-columns:auto auto;
   }
 `;
 export default AllRequests;

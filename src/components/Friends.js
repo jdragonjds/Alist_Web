@@ -4,8 +4,9 @@ import { Navigate } from "react-router-dom";
 import { useGlobalContext } from "../context";
 import React, { useState } from "react";
 import { AllFriends, AllRequests } from "./friendsComponents";
-
+import User from "./User";
 const Friends = () => {
+  const { openUserTab } = useGlobalContext();
   const [sideTab, setSideTab] = useState("friends");
   const [mainTab, setMainTab] = useState("friend");
   const handleSide = (e) => {
@@ -14,6 +15,7 @@ const Friends = () => {
   const handleMain = (e) => {
     setMainTab(e.target.innerHTML);
   };
+  console.log(openUserTab);
   return (
     <Wrapper>
       <div className="row">
@@ -28,20 +30,22 @@ const Friends = () => {
         </div>
         <div class="main">
           <ul class="tabs">
-            <li onClick={handleSide} name="friend">
+            <li onClick={handleMain} name="friend">
               friend
             </li>
             <li> / </li>
-            <li onClick={handleSide} name="recomendations">
+            <li onClick={handleMain} name="recomendations">
               recomendations
             </li>
           </ul>
+          <div className="scroll">{openUserTab && <User />}</div>
         </div>
       </div>
     </Wrapper>
   );
 };
 const Wrapper = styled.div`
+  height: 100%;
   * {
     box-sizing: border-box;
   }
@@ -50,11 +54,11 @@ const Wrapper = styled.div`
     flex-wrap: wrap;
   }
   .side {
-    flex: 30%;
+    flex: 20%;
     padding: 20px;
   }
   .main {
-    flex: 70%;
+    flex: 80%;
     padding: 20px;
   }
   font-family: "Inconsolata", monospace;
@@ -70,6 +74,26 @@ const Wrapper = styled.div`
     li {
       font-size: 20px;
       margin: 5px;
+    }
+  }
+  .scroll {
+    overflow: hidden;
+    overflow-y: scroll;
+    max-height: 750px;
+  }
+  @media only screen and (max-width: 600px) {
+    width: 100vw;
+    .row {
+      flex-direction: column;
+      flex-wrap: wrap;
+    }
+    .side {
+      flex: 1;
+      padding: 4px;
+    }
+    .main {
+      flex: 1;
+      padding: 4px;
     }
   }
 `;

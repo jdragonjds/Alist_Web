@@ -9,7 +9,7 @@ import {
   ResetPassword,
   Dashboard,
 } from "./pages";
-import { Navbar } from "./components";
+import { Navbar, UserModal } from "./components";
 import { useGlobalContext } from "./context";
 import bgimage from "./img/jpop.43bfb92.jpg";
 function App() {
@@ -41,6 +41,7 @@ function App() {
           <Route path="/register" exact={true} element={<Register />} />
           <Route path="/login" exact={true} element={<Login />} />
           <Route path="/dashboard" exact={true} element={<Dashboard />} />
+          <Route path="usertab" element={<UserModal />} />
           <Route path="*" element={<Error />} />
         </Routes>
       </Router>
