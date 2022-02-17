@@ -22,7 +22,6 @@ const Alist = () => {
 
   const getList = async () => {
     let alist = await getAnimeList();
-    console.log(alist);
     console.log("getting image");
 
     for (let i = 0, len = alist.length; i < len; i++) {

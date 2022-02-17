@@ -18,7 +18,6 @@ const UserModal = () => {
   const handleSubmit = async () => {
     let formData = new FormData();
     formData.append("image", image);
-    console.log(image);
     await axios.post("userinfo/upload", formData);
     await axios.post("/userinfo/", {
       bio,

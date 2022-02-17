@@ -1,15 +1,30 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Navigate } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import "../../axios";
 import { acceptRequest, cancelRequest } from "./handleRequest";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckCircle, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { useGlobalContext } from "../../context";
+
+import {
+  faCheckCircle,
+  faMinusSquare,
+  faXmark,
+  faUserPlus,
+  faUserCheck,
+  faBriefcaseClock,
+} from "@fortawesome/free-solid-svg-icons";
 
 const AllRequests = () => {
   const [requests, setRequests] = useState([]);
+  const [user2, setUser2] = useState(null);
+  const [userList, setUserList] = useState([]);
+  const refContainer = useRef(null);
+  const userContainer = useRef(null);
+  const { setCurrentId } = useGlobalContext();
+
   const getAllRequests = async () => {
     const { data } = await axios.get("/friend/request");
     setRequests(data);
@@ -18,8 +33,65 @@ const AllRequests = () => {
   useEffect(() => {
     getAllRequests();
   }, []);
+  const sendRequest = async (id) => {
+    try {
+      const { data } = await axios.post("/friend/request", {
+        user2: id,
+      });
+      refContainer.current.innerHTML = "sent";
+    } catch (error) {
+      if (error.response.data.status === "requeste already sent") {
+        refContainer.current.innerHTML = "sent";
+      }
+    }
+  };
+  const selectUser = (id) => {
+    setCurrentId(id);
+  };
+  const findUser = async () => {
+    const { data } = await axios.post("/friend/", {
+      user2,
+    });
+    setUserList(data);
+  };
+  useEffect(() => {
+    findUser();
+  }, [user2]);
+  const handleUserInput = (e) => {
+    if (e.keyCode === 13) {
+      userContainer.current.style.display = "block";
+      setUser2(e.target.value);
+    }
+  };
+
   return (
     <Wrapper>
+      <input
+        type="name"
+        name="name"
+        className="finduser"
+        placeholder="find user..."
+        onKeyDown={handleUserInput}
+      />
+      <ul className="top-users" ref={userContainer}>
+        {userList.map((users) => {
+          return (
+            <div
+              requestid={users._id}
+              className="item"
+              onClick={() => selectUser(users._id)}
+            >
+              {users.name}
+              <span className="space" ref={refContainer}>
+                <FontAwesomeIcon
+                  icon={faUserPlus}
+                  onClick={() => sendRequest(users._id)}
+                />
+              </span>
+            </div>
+          );
+        })}
+      </ul>
       <ul className="tabs-req">
         {requests.map((request) => {
           return (
@@ -68,6 +140,7 @@ const Wrapper = styled.div`
     div:nth-child(even) {
       rgba(255, 99, 71, 0.3)
     }
+    
   }
   .item{
     display:flex;
@@ -80,6 +153,35 @@ const Wrapper = styled.div`
     display:grid;
     grid-gap:10px;
     grid-template-columns:auto auto;
+  }
+  .finduser{
+      height:3rem;
+      width:100%;
+      margin-right:1rem;
+      font-size:17px;
+      font-family: "Inconsolata", monospace;
+      color:white;
+      background:rgba(0,0,0,0.6);
+  }
+  .top-users{
+    z-index:2;
+    height:3rem;
+    width:100%;
+    margin-right:1rem;
+    font-size:17px;
+    font-family: "Inconsolata", monospace;
+    color:white;
+    background:rgba(0,0,0,0.8);
+    display:none;
+  }
+  .show{
+    display:block;
+  }
+  @media only screen and (max-width: 600px){
+    .finduser{
+      margin:5px;
+      width:95%;
+    }
   }
 `;
 export default AllRequests;

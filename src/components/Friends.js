@@ -90,6 +90,7 @@ const Wrapper = styled.div`
     .side {
       flex: 1;
       padding: 4px;
+      margin: 0;
     }
     .main {
       flex: 1;

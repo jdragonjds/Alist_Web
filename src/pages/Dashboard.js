@@ -16,9 +16,11 @@ const Dashboard = () => {
   let navigate = useNavigate();
   const { alert, showAlert, loading, setLoading, success, setSuccess } =
     useLocalState();
-
+  const { user } = useGlobalContext();
   const tab = useQuery().get("tab");
-
+  if (!user) {
+    navigate("/");
+  }
   return (
     <>
       <Wrapper className="page">

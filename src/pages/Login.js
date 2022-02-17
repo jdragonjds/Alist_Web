@@ -45,7 +45,6 @@ function Login() {
       showAlert({ text: `Welcome, ${data.user.name}`, type: "success" });
       setSuccess(true);
       saveUser(data.user.name);
-      console.log("login in success");
       localStorage.setItem(
         "user",
         JSON.stringify({ name: data.user.name, token: data.token })
