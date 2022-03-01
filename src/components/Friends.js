@@ -15,7 +15,6 @@ const Friends = () => {
   const handleMain = (e) => {
     setMainTab(e.target.innerHTML);
   };
-  console.log(openUserTab);
   return (
     <Wrapper>
       <div className="row">

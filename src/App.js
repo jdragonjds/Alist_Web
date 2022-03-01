@@ -9,7 +9,7 @@ import {
   ResetPassword,
   Dashboard,
 } from "./pages";
-import { Navbar, UserModal } from "./components";
+import { Navbar, UserModal, ListenMoe } from "./components";
 import { useGlobalContext } from "./context";
 import bgimage from "./img/jpop.43bfb92.jpg";
 function App() {
@@ -26,6 +26,7 @@ function App() {
       <Router>
         <img src={bgimage} alt="listen" className="background" />
         <Navbar />
+        <ListenMoe />
         <Routes>
           <Route path="/" exact={true} element={<Home />} />
           <Route

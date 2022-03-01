@@ -29,7 +29,6 @@ const Alist = () => {
     }
     SetAnimeList(alist);
     console.log("found images");
-    console.log(animeList);
   };
 
   useEffect(() => {

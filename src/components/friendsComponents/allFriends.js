@@ -44,31 +44,30 @@ const AllFriends = () => {
 const Wrapper = styled.div`
   margin-top: 1rem;
   text-align: center;
-  .tabs-fr { 
+  .tabs-fr {
     display: grid;
-    grid-direction: column;  
+    grid-direction: column;
     grid-gap: 5px;
     list-style-type: none;
     color: white;
-    overflow:hidden; 
-    overflow-y:scroll;
-    max-height:700px;
-    div { 
-      font-size: 25px; 
-      height:50px; 
-      box-sizing: border-box; 
-      display:grid; 
-      grid-template-columns:auto auto;
-      justify-content:space-between;
-      padding :11px; 
+    overflow: hidden;
+    overflow-y: scroll;
+    max-height: 700px;
+    div {
+      font-size: 25px;
+      height: 50px;
+      box-sizing: border-box;
+      display: grid;
+      grid-template-columns: auto auto;
+      justify-content: space-between;
+      padding: 11px;
     }
     div:nth-child(odd) {
       background: rgba(255, 99, 71, 0.2);
     }
     div:nth-child(even) {
-      rgba(255, 99, 71, 0.3)
+      background: rgba(255, 99, 71, 0.35);
     }
   }
- 
 `;
 export default AllFriends;

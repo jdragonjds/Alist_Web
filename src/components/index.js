@@ -4,4 +4,5 @@ import TabBar from "./TabBar";
 import Explore from "./Explore";
 import Friends from "./Friends";
 import UserModal from "./UserModal";
-export { Alist, Navbar, TabBar, Explore, Friends, UserModal };
+import ListenMoe from "./ListenMoe";
+export { Alist, Navbar, TabBar, Explore, Friends, UserModal, ListenMoe };
