@@ -7,7 +7,8 @@ import "../../axios";
 import { acceptRequest, cancelRequest } from "./handleRequest";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useGlobalContext } from "../../context";
-
+import { connect } from "react-redux";
+import { fetchFriendRequests } from "../../alist-server-calls/fetchFriendRequests";
 import {
   faCheckCircle,
   faMinusSquare,
@@ -17,22 +18,17 @@ import {
   faBriefcaseClock,
 } from "@fortawesome/free-solid-svg-icons";
 
-const AllRequests = () => {
-  const [requests, setRequests] = useState([]);
+const AllRequests = ({ requests, loading, error, fetchFriendRequests }) => {
   const [user2, setUser2] = useState(null);
   const [userList, setUserList] = useState([]);
   const refContainer = useRef(null);
   const userContainer = useRef(null);
   const { setCurrentId } = useGlobalContext();
 
-  const getAllRequests = async () => {
-    const { data } = await axios.get("/friend/request");
-    setRequests(data);
-    console.log("rerender");
-  };
   useEffect(() => {
-    getAllRequests();
-  }, []);
+    fetchFriendRequests();
+  }, [fetchFriendRequests]);
+
   const sendRequest = async (id) => {
     try {
       const { data } = await axios.post("/friend/request", {
@@ -93,23 +89,25 @@ const AllRequests = () => {
         })}
       </ul>
       <ul className="tabs-req">
-        {requests.map((request) => {
-          return (
-            <div requestid={request.id} className="item">
-              {request.name}
-              <span className="space">
-                <FontAwesomeIcon
-                  icon={faCheckCircle}
-                  onClick={() => acceptRequest(request.id)}
-                />
-                <FontAwesomeIcon
-                  icon={faXmark}
-                  onClick={() => cancelRequest(request.id)}
-                />
-              </span>
-            </div>
-          );
-        })}
+        {loading && <p>loading...</p>}
+        {!loading &&
+          requests.map((request) => {
+            return (
+              <div requestid={request.id} className="item">
+                {request.name}
+                <span className="space">
+                  <FontAwesomeIcon
+                    icon={faCheckCircle}
+                    onClick={() => acceptRequest(request.id)}
+                  />
+                  <FontAwesomeIcon
+                    icon={faXmark}
+                    onClick={() => cancelRequest(request.id)}
+                  />
+                </span>
+              </div>
+            );
+          })}
       </ul>
     </Wrapper>
   );
@@ -182,4 +180,13 @@ const Wrapper = styled.div`
     }
   }
 `;
-export default AllRequests;
+const mapStateToProps = (state) => {
+  console.log(state);
+  return {
+    requests: state.friend.requests,
+    loading: state.friend.loading,
+    error: state.friend.requestsError,
+  };
+};
+
+export default connect(mapStateToProps, { fetchFriendRequests })(AllRequests);

@@ -1,36 +1,23 @@
 import { useLocation, Link } from "react-router-dom";
 import styled from "styled-components";
-import { Navigate } from "react-router-dom";
-import { useGlobalContext } from "../context";
+import { connect } from "react-redux";
+import { fetchAnime } from "../alist-server-calls/fetchAnime";
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import "../axios";
 
-const Alist = () => {
-  const [animeList, SetAnimeList] = useState([]);
-
-  const getImg = async (name) => {
-    const data = await fetch(
-      `https://api.jikan.moe/v3/search/anime?q=${name}&order_by=title&sort=asc&limit=1`
-    ).then((res) => res.json());
-    return data.results[0].image_url;
-  };
-
-  const getList = async () => {
-    const { data } = await axios.get("/anime");
-    for (let i = 0; i < data.animeList.length; i++) {
-      data.animeList[i] = {
-        ...data.animeList[i],
-        img: await getImg(data.animeList[i].name),
-      };
-    }
-    SetAnimeList(data.animeList);
-  };
-
+const Alist = ({ animeList, loading, error, fetchAnime }) => {
   useEffect(() => {
-    getList();
+    fetchAnime();
   }, []);
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+  if (error) {
+    return <div>{error}</div>;
+  }
+  console.log("animeList");
+  console.log(animeList);
   return (
     <Wrapper>
       <div className="animeContainer">
@@ -79,4 +66,13 @@ const Wrapper = styled.div`
     box-shadow: 0px 0px 6px 3px rgba(233, 140, 26, 0.81);
   }
 `;
-export default Alist;
+
+const mapStateToProps = (state) => {
+  return {
+    animeList: state.anime.anime,
+    loading: state.anime.loading,
+    error: state.anime.error,
+  };
+};
+
+export default connect(mapStateToProps, { fetchAnime })(Alist);

@@ -8,21 +8,25 @@ import axios from "axios";
 import "../../axios";
 import { removeFriend } from "./handleRequest";
 import { useGlobalContext } from "../../context";
+import { connect } from "react-redux";
+import { fetchFriends } from "../../alist-server-calls/fetchFriends";
 
-const AllFriends = () => {
-  const [friends, setFriends] = useState([]);
+const AllFriends = ({ friends, loading, error, fetchFriends }) => {
   const { setCurrentId } = useGlobalContext();
-  const getAllFriends = async () => {
-    const { data } = await axios.get("/friend/");
-    setFriends(data);
-  };
-  useEffect(() => {
-    getAllFriends();
-  }, []);
   const handle = (e) => {
     const id = e.target.getAttribute("data-id");
     setCurrentId(id);
   };
+
+  useEffect(() => {
+    fetchFriends();
+  }, [fetchFriends]);
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+  if (error) {
+    return <div>{error}</div>;
+  }
   return (
     <Wrapper>
       <ul className="tabs-fr">
@@ -70,4 +74,14 @@ const Wrapper = styled.div`
     }
   }
 `;
-export default AllFriends;
+
+const mapStateToProps = (state) => {
+  console.log(state);
+  return {
+    friends: state.friend.friends,
+    loading: state.friend.loading,
+    error: state.friend.error,
+  };
+};
+
+export default connect(mapStateToProps, { fetchFriends })(AllFriends);

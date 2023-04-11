@@ -5,7 +5,8 @@ import styled from "styled-components";
 import React, { useEffect, useState } from "react";
 import useLocalState from "../utils/localState";
 import { useGlobalContext } from "../context";
-import logo from "../img/ALIST-logos_transparent.png";
+import { Provider } from "react-redux";
+import store from "../redux/store";
 import { TabBar, Alist, Explore, Friends } from "../components";
 
 function useQuery() {
@@ -24,10 +25,12 @@ const Dashboard = () => {
   return (
     <>
       <Wrapper className="page">
-        <TabBar />
-        {(tab === "alist" || !tab) && <Alist />}
-        {tab === "friends" && <Friends />}
-        {tab === "explore" && <Explore />}
+        <Provider store={store}>
+          <TabBar />
+          {(tab === "alist" || !tab) && <Alist />}
+          {tab === "friends" && <Friends />}
+          {tab === "explore" && <Explore />}
+        </Provider>
       </Wrapper>
     </>
   );
