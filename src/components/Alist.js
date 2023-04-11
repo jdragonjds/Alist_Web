@@ -6,31 +6,25 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../axios";
 
-const getAnimeList = async () => {
-  const { data } = await axios.get("/anime");
-  return data.animeList;
-};
-const getImg = async (name) => {
-  const data = await fetch(
-    `https://api.jikan.moe/v3/search/anime?q=${name}&order_by=title&sort=asc&limit=1`
-  ).then((res) => res.json());
-  return data.results[0].image_url;
-};
-
 const Alist = () => {
   const [animeList, SetAnimeList] = useState([]);
 
-  const getList = async () => {
-    let alist = await getAnimeList();
-    console.log(alist);
-    console.log("getting image");
+  const getImg = async (name) => {
+    const data = await fetch(
+      `https://api.jikan.moe/v3/search/anime?q=${name}&order_by=title&sort=asc&limit=1`
+    ).then((res) => res.json());
+    return data.results[0].image_url;
+  };
 
-    for (let i = 0, len = alist.length; i < len; i++) {
-      alist[i] = { ...alist[i], img: await getImg(alist[i].name) };
+  const getList = async () => {
+    const { data } = await axios.get("/anime");
+    for (let i = 0; i < data.animeList.length; i++) {
+      data.animeList[i] = {
+        ...data.animeList[i],
+        img: await getImg(data.animeList[i].name),
+      };
     }
-    SetAnimeList(alist);
-    console.log("found images");
-    console.log(animeList);
+    SetAnimeList(data.animeList);
   };
 
   useEffect(() => {
@@ -41,7 +35,6 @@ const Alist = () => {
     <Wrapper>
       <div className="animeContainer">
         {animeList.map((anime) => {
-          console.log(anime);
           return (
             <div className="animeTile">
               <span>{anime.name}</span>

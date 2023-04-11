@@ -3,9 +3,18 @@ import React, { useContext, useState, useEffect } from "react";
 const AppContext = React.createContext();
 const AppProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
+  const [openUserTab, setOpenUserTab] = useState(false);
+  const [currentID, setCurrentID] = useState("");
   const [user, setUser] = useState(null);
   const saveUser = (user) => {
     setUser(user);
+  };
+  const setCurrentId = (cid) => {
+    setCurrentID(cid);
+    setOpenUserTab(true);
+  };
+  const getCurrentId = () => {
+    return currentID;
   };
   const removeUser = () => {
     setUser(null);
@@ -29,6 +38,10 @@ const AppProvider = ({ children }) => {
         logoutUser,
         saveUser,
         logoutUser,
+        currentID,
+        setCurrentId,
+        getCurrentId,
+        openUserTab,
       }}
     >
       {children}

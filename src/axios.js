@@ -1,6 +1,6 @@
 import axios from "axios";
 
-axios.defaults.baseURL = "https://alist-api-01.herokuapp.com/api/v1";
+axios.defaults.baseURL = "https://alist-miku.up.railway.app/api/v1";
 
 axios.interceptors.request.use(function (req) {
   const user = localStorage.getItem("user");

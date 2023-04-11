@@ -11,7 +11,6 @@ const Explore = () => {
       <h>Youtube Channels</h>
       <div className="Container">
         {data.youtube.map((anime) => {
-          console.log(anime);
           return (
             <div className="Tile">
               <span>{anime.name}</span>
@@ -25,7 +24,6 @@ const Explore = () => {
       <h>Manga Sites</h>
       <div className="Container">
         {data.manga.map((anime) => {
-          console.log(anime);
           return (
             <div className="Tile">
               <span>{anime.name}</span>
